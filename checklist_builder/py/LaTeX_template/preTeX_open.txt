@@ -1,0 +1,6 @@
+\documentclass{article}
+
+\usepackage[letterpaper, top=0.5in, left=0.5in, right=0.5in]{geometry}		% Page Dimensions
+\graphicspath{ {./} }										% Set Image Directory Root Path for the graphicx package
+\graphicspath{ {./tex_lib/images} }								% Set Image Directory Root Path for the graphicx package
+
