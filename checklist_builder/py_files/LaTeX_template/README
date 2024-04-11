@@ -1,0 +1,17 @@
+
+list_files:
+Line by line .csv files for functional input
+
+preTeX_files:
+Line by line insertion into .tex file to be built
+
+
+
+makefile items:
+
+OUTPUT_DIR = 
+
+pdflatex .\checklist_builder\output.tex --output-directory=.\build\output
+del .\build\output\output.aux
+del .\build\output\output.log
+.\build\output\output.pdf

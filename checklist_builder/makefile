@@ -1,1 +1,199 @@
-# Null Place Holder for time being
+##
+##### 
+##
+##### CONSTANT BOILER PLATE #######
+DIRPATH=.\c_files
+BUILDPATH=.\..\build
+BINPATH=$(BUILDPATH)\bin
+OBJPATH=$(BUILDPATH)\obj
+TESTPATH=$(BUILDPATH)\test
+OUTPUTPATH=$(BUILDPATH)\output
+TEST_BINPATH=$(TESTPATH)\bin
+TEST_OBJPATH=$(TESTPATH)\obj
+
+#FILENAME=kata
+FILENAME=output
+TEX_FILENAME=$(FILENAME).tex
+AUX_FILENAME=$(FILENAME).aux
+LOG_FILENAME=$(FILENAME).log
+PDF_FILENAME=$(FILENAME).pdf
+
+BUILD_TEX=pdflatex
+OUTPUT_CMD=--output-directory=
+
+BUILDER_OUTPUT=$(OUTPUT_CMD)$(OUTPUTPATH)
+BUILDER_OPTIONS=$(BUILDER_OUTPUT)
+
+AUX_FILES=$(OUTPUTPATH)\$(AUX_FILENAME)
+AUX_FILES=$(AUX_FILES) $(OUTPUTPATH)\$(LOG_FILENAME)
+
+
+PDF_FILE=$(OUTPUTPATH)\$(PDF_FILENAME)
+
+#BUILDER_OPTIONS=$(BUILDER_OPTIONS) 
+
+
+### app file ending ###
+# $(MAKE_CALL) code here 
+!ifndef 0 # \	
+EXE_FILETYPE=.exe # \
+!else
+# Make code here 
+EXE_FILETYPE=#
+#
+!endif
+
+
+INCL= 
+CC=gcc
+CFLAGS= #-I $(INCL)
+
+
+
+#FILEBIN=$(OBJPATH)\$(FILENAME).o
+#CFILE=$(DIRPATH)\$(FILENAME).c
+#FILE_EXE=$(BINPATH)\$(FILENAME)$(EXE_FILETYPE)
+
+#SOURCES = $(SOURCES) $(CFILE)
+#HEADERS =
+#APPS = $(APPS) $(FILE_EXE)
+
+
+##### VARYING FILE BOILER PLATE #######
+#OBJ1PATH=$(DIRPATH)\OOP
+#OBJ1NAME=oop
+#OBJ1SRC=$(OBJ1PATH)\$(OBJ1NAME).c
+#OBJ1HDR=$(OBJ1PATH)\$(OBJ1NAME).h
+#OBJ1=$(OBJPATH)\$(OBJ1NAME).o
+
+#SOURCES = $(SOURCES) $(OBJ1SRC)
+#HEADERS = $(HEADERS) $(OBJ1HDR)
+#OBJECTS = $(OBJECTS) $(OBJ1)
+#OBJSRCS = $(SOURCES) $(OBJ1SRC)
+#OBJBUILDS = 1
+
+
+#CLASS1DIR=$(OBJ1PATH)\classes
+
+#OBJ3PATH=$(CLASS1DIR)
+#OBJ3NAME=Statistics
+#OBJ3SRC=$(CLASS1DIR)\$(OBJ3NAME).c
+#OBJ3HDR=$(CLASS1DIR)\$(OBJ3NAME).h
+#OBJ3=$(OBJPATH)\$(OBJ3NAME).o
+
+#SOURCES = $(SOURCES) $(OBJ3SRC)
+#HEADERS = $(HEADERS) $(OBJ3HDR)
+#OBJECTS = $(OBJECTS) $(OBJ3)
+#OBJSRCS = $(SOURCES) $(OBJ3SRC)
+#OBJBUILDS = $(OBJBUILDS) 3
+
+
+#CLASS2DIR=$(OBJ1PATH)\MyClasses
+
+#OBJ6PATH=$(CLASS2DIR)
+#OBJ6NAME=AuxClass
+#OBJ6SRC=$(CLASS2DIR)\$(OBJ6NAME).c
+#OBJ6HDR=$(CLASS2DIR)\$(OBJ6NAME).h
+#OBJ6=$(OBJPATH)\$(OBJ6NAME).o
+
+#SOURCES = $(SOURCES) $(OBJ6SRC)
+#HEADERS = $(HEADERS) $(OBJ6HDR)
+#OBJECTS = $(OBJECTS) $(OBJ6)
+#OBJSRCS = $(SOURCES) $(OBJ6SRC)
+#OBJBUILDS = $(OBJBUILDS) 6
+
+
+
+# Code below should allow $(MAKE_CALL) and make to operate successfully
+# $(MAKE_CALL) code here \
+!ifndef 0# \
+MV = move # \
+RM=del # \
+RMDIR=rmdir # \
+CP=copy # \
+MAKE_CALL=nmake # \
+!else
+ifeq (0,0) #
+# Make code here 
+MV=mv -f # 
+RM=rm -f #
+RMDIR=rm -rf
+CP=cp -f # 
+MAKE_CALL=make #
+endif #
+# \
+!endif 
+
+
+
+##### CONSTANT BUILD #######
+MAKE: $(FILEBIN) $(OBJECTS) $(TST_OBJECTS)
+	$(CC) $(CFLAGS) $(FILEBIN) $(OBJECTS) -o $(FILE_EXE)
+	$(MAKE_CALL) clean_up
+	
+
+MAKE_OBJ: $(FILEBIN) $(OBJECTS)
+	$(CC) $(CFLAGS) $(FILEBIN) $(OBJECTS) -o $(FILE_EXE)
+
+fast: $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(FILE_EXE)
+	$(MAKE_CALL) clean_up
+
+#$(FILEBIN): $(CFILE)
+#	$(MAKE_CALL) BUILD_DIR
+#	$(MAKE_CALL) build
+#	$(MAKE_CALL) BUILD_OBJ
+#	$(CC) -c $(CFLAGS) $(CFILE) -o $(FILEBIN)
+
+
+build::
+	$(CP) blankmake Makefile
+	FOR %%i IN ($(TST_OBJBUILDS))\
+		DO \
+		@echo( $$(CC) $$(CFLAGS) -c $$(TST_OBJ%%iSRC) -o $$(TST_OBJ%%i) >> Makefile
+	FOR %%i IN ($(OBJBUILDS))\
+		DO \
+		@echo( $$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i) >> Makefile
+
+pdf:
+	$(BUILD_TEX) $(BUILDER_OPTIONS) $(TEX_FILENAME) 
+	$(MAKE_CALL) clean_up
+
+show: 
+	$(BUILD_TEX) $(BUILDER_OPTIONS) $(TEX_FILENAME) 
+	$(MAKE_CALL) clean_up
+	$(PDF_FILE)
+
+run:
+	($(FILE_EXE))
+
+clean:
+	$(RM) $(APPS)
+	$(RMDIR) $(BINPATH) $(TEST_BINPATH)
+
+clean_up:
+	$(RM) $(AUX_FILES)
+#	$(RM) $(FILEBIN) $(OBJECTS) $(TST_OBJECTS)
+#	$(RMDIR) $(OBJPATH) $(TEST_OBJPATH)
+
+clean_all:
+	$(MAKE_CALL) clean_up
+	$(MAKE_CALL) clean
+
+BUILD_DIR:
+	mkdir $(BINPATH)
+	mkdir $(OBJPATH)
+	mkdir $(TEST_BINPATH)
+	mkdir $(TEST_OBJPATH)
+	
+BUILD_OBJ:
+	@echo building...
+#####	VARIABLE BUILD	#####
+ $(CC) $(CFLAGS) -c $(OBJ1SRC) -o $(OBJ1) 
+ $(CC) $(CFLAGS) -c $(OBJ2SRC) -o $(OBJ2) 
+ $(CC) $(CFLAGS) -c $(OBJ3SRC) -o $(OBJ3) 
+ $(CC) $(CFLAGS) -c $(OBJ4SRC) -o $(OBJ4) 
+ $(CC) $(CFLAGS) -c $(OBJ5SRC) -o $(OBJ5) 
+ $(CC) $(CFLAGS) -c $(OBJ6SRC) -o $(OBJ6) 
+ $(CC) $(CFLAGS) -c $(OBJ7SRC) -o $(OBJ7) 
+ $(CC) $(CFLAGS) -c $(OBJ8SRC) -o $(OBJ8) 

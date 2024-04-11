@@ -1,0 +1,14 @@
+\usepackage{multicol}									% Multiple Column Layouts
+\usepackage{fancyhdr}									% Clean Headers and Footers
+\usepackage{multicol}									% Multiple Column Layouts
+
+\usepackage{hyperref}									% Hyperlink for TOC
+
+\hypersetup{ 										% Color Hyperlinks
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor= blue,
+    urlcolor=blue
+}
+
