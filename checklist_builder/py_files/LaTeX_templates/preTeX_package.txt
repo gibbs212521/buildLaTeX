@@ -2,6 +2,11 @@
 \usepackage{fancyhdr}									% Clean Headers and Footers
 \usepackage{multicol}									% Multiple Column Layouts
 
+\usepackage{tdclock}									% Insert Today's Date in PDF via \initclock & \tddate
+			%%% Please note: tdclock.sty has been modified to include bordercolor=] to all \TextField modifiers
+\mmddyyyy 		% sets to American Date Format
+
+
 \usepackage{hyperref}									% Hyperlink for TOC
 
 \hypersetup{ 										% Color Hyperlinks

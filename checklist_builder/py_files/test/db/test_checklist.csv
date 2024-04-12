@@ -1,4 +1,4 @@
-Generac,,,,,
+Granny's,,,,,
 
 Tag,Checkbox Text,Tutorial Text,Image Filename,Section Title,
 
@@ -8,4 +8,24 @@ butter,Five Pounds of Butter, Grandma liked supple hands,example-image-golden,Ps
 good, Sugar and Spice but nothing Nice, Grandma sweetened compliments with insults,,Psycho Granny FTW,
 
 HEADER,Grandpa's Recipe for Happiness,,,,
+defeat,I have always wanted to eat fish before the sea water dries up did you know?,Grandpa had a dream,,,
 surrender,Give Up All Hope Ye Who Enter Here!,Grandpa had no clue,example-grid-100x100pt,Sorry Gramps,
+bad, I did not know that you could find a cat fish before it decides to drink a full load of donkey wares that smell better than roses,,,,
+
+START TABLE, Table Name Shown Here, Any Captions Shown Here but leave blank for no captions
+DIMENSIONS, 90, 80, 60, 60
+Relationship, Quantification, Ratios for Thinkers, Danger Close Level Evaluation,
+Granny wakes, 1, 3.5, 2.2,
+Gramps wakes, 2, 3.8, 2.1,
+Breakfast is late, 2, 6, 4,
+Lunch is late, 2, 8, 8,
+Supper is late, 1, 9.9, 2,
+HLINE
+Dies Irae Adventi, 0, 0, 0
+END TABLE,
+
+PAGEBREAK,,,,,
+
+HEADER, Auntie's Recipe for Soap,,,,
+dostoyesky, Maybe you found a cat,,,,
+domstoyesky, But I found a dog,,,,
