@@ -41,7 +41,8 @@ def parseLine(line):
 ### TODO: MUST BUILD OUT body.txt file prior to collecting pre-tex files
 
 csv_db = [[],[],[],[]]
-csv_file = TEST_DIR + "db/test_checklist.csv"
+# csv_file = TEST_DIR + "db/test_checklist.csv"
+csv_file = TEST_DIR + "db/ignore_test_checklist.csv"
 
 body_items = []
 
@@ -49,8 +50,68 @@ header_not_found = 1
 table_under_evaluation = 0
 checklist_interrupted = 0
 
-with open(csv_file, 'r', newline='', encoding='utf-8') as f:
+
+def process_csv_contents(row):
+    if '"' == row[1][0]:
+        print(row[1:])
+        new_contents = row[1]
+        for collected in row[2:-3]:
+            new_contents += ',' + collected
+        new_contents = new_contents[1:-2]
+    else:
+        new_contents = row[1]
+    count = 0
+    ## The contents LaTeX-ification loop
+    while (count + 1) < len(new_contents):
+        for count, character in enumerate(new_contents):
+            if "|" == character and "|" == new_contents[count-1] and \
+                new_contents[count-2:count+2] != "$||$":
+                new_contents = new_contents[:count-1] + "$||$" + new_contents[count+1:]
+                break
+            if "VOC" == new_contents[count-2:count+1]:
+                new_contents = new_contents[:count-2] + "V$_{O"+"C}$" + new_contents[count+1:]
+                break
+            if "ISC" == new_contents[count-2:count+1]:
+                new_contents = new_contents[:count-2] + "I$_{S"+"C}$" + new_contents[count+1:]
+                break
+            if "https:" == new_contents[count-5:count+1] and\
+                "url{https:" != new_contents[count-9:count+1]:
+                for p in range(len(new_contents[count+1:])):
+                    if " " == new_contents[p + count]:
+                        new_contents = new_contents[:p+count] + '}' + new_contents[p+count:]
+                        break
+                if '}' not in new_contents:
+                    new_contents = new_contents + '}'
+                print(new_contents)
+                new_contents = new_contents[:count-5] + "\\url{" + new_contents[count-5:]
+                break
+            if (character == '<')\
+                and new_contents[count-1] is not "$"\
+                and new_contents[count+1] is not "$":#\
+                new_contents = new_contents[:count] + '$' + new_contents[count:count+1] \
+                    + '$' + new_contents[count+1:]
+                break
+            if (character == '>')\
+                and new_contents[count-1] is not "$":#\
+                new_contents = new_contents[:count] + '$' + new_contents[count:count+1] \
+                    + '$' + new_contents[count+1:]
+                break
+            if (character == "&" or character == "%")\
+                and new_contents[count-1] is not "\\"\
+                and new_contents[count-1] is not "|":#\
+                # and new_contents[count+1] is not "_" \
+                # and new_contents[count+1] is not "*" \
+                # and new_contents[count+1] is not "\\":
+                new_contents = new_contents[:count] + '\\' + new_contents[count:]
+                break
+            
+            
+    return new_contents
+
+
+with open(csv_file, 'r', newline='', encoding='ANSI') as f:
     reader = csv.reader(f, delimiter=',', quotechar='|')
+    
     for row in reader:
         if len(row) is 0: continue
         if OPERATION == "NONE":
@@ -78,22 +139,72 @@ with open(csv_file, 'r', newline='', encoding='utf-8') as f:
             table_under_evaluation = 0
         elif 'DIMENSIONS' in row[0].upper() and table_under_evaluation:
             for dimension in row:
-                body_items[-1]['Dimensions'].append(dimension)
+                try:
+                    body_items[-1]['Dimensions'].append(int(dimension))
+                except:
+                    continue
         elif table_under_evaluation:
+            for index in range(len(row)):
+                new_contents = row[index]
+                ### TODO: Refactor this as a function that returns new contents
+                count = 0
+                while (count + 1) < len(new_contents):
+                    for count, character in enumerate(new_contents):
+                        if "|" == character and "|" == new_contents[count-1] and \
+                            new_contents[count-2:count+2] != "$||$":
+                            new_contents = new_contents[:count-1] + "$||$" + new_contents[count+1:]
+                            break
+                        if "VOC" == new_contents[count-2:count+1]:
+                            new_contents = new_contents[:count-2] + "V$_{O"+"C}$" + new_contents[count+1:]
+                            break
+                        if "ISC" == new_contents[count-2:count+1]:
+                            new_contents = new_contents[:count-2] + "I$_{S"+"C}$" + new_contents[count+1:]
+                            break
+                        if "https:" == new_contents[count-5:count+1] and\
+                            "url{https:" == new_contents[count-9:count+1]:
+                            for p in range(len(new_contents[count+1:])):
+                                if " " == new_contents[p + count]:
+                                    new_contents = new_contents[:p+count] + '}' + new_contents[p+count:]
+                                    break
+                            print(new_contents)
+                            new_contents = new_contents[:count-5] + "\\url{" + new_contents[count+5:]
+                            break
+                        if character == '[' and new_contents[count+2] == ']' and\
+                            new_contents[count-1] != "\\":
+                            new_contents = new_contents[:count] + "\\" + new_contents[count:count+2]\
+                                + "\\" + new_contents[count+2:]
+                            break
+                        if character == '[' and new_contents[count+3] == ']' and\
+                            new_contents[count-1] != "\\":
+                            new_contents = new_contents[:count] + "\\" + new_contents[count:count+3]\
+                                + "\\" + new_contents[count+3:]
+                            break
+                        if (character == "&" or character == "%")\
+                            and new_contents[count-1] is not "\\"\
+                            and new_contents[count-1] is not "|":#\
+                            # and new_contents[count+1] is not "_" \
+                            # and new_contents[count+1] is not "*" \
+                            # and new_contents[count+1] is not "\\":
+                            new_contents = new_contents[:count] + '\\' + new_contents[count:]
+                            break
+                row[index] = new_contents
+                print(new_contents)
+                    
             body_items[-1]['Contents'].append(row)
         elif 'PAGEBREAK' in row[0].upper():
             body_items.append('PAGEBREAK')
-        else:
+        elif len(row[1]):
+            new_contents = process_csv_contents(row)
             body_items.append(
                 {
                     'Tag' : row[0],
-                    'Checkbox Text': row[1],
-                    'Tutorial Text' : row[2],
-                    'Image Filename' : row[3],
-                    'Section Title' : row[4]
+                    'Checkbox Text': new_contents,
+                    'Tutorial Text' : row[-3],
+                    'Image Filename' : row[-2],
+                    'Section Title' : row[-1]
                 }
             )
-            # print(row)
+
 
 body_text = []
 
@@ -113,7 +224,7 @@ def build_table(dictionary_object):
     captions = dictionary_object['Section Title']
     dimensions = dictionary_object['Dimensions']
     tabular_line = '\\begin{tabular}{| '
-    for k in range(len(dimensions)-1): tabular_line += 'c | '
+    for k in range(len(dimensions)): tabular_line += 'c | '
     tabular_line += '}'
     
     body_text.append('\n\\begin{table}[h!]%\n')
@@ -123,16 +234,19 @@ def build_table(dictionary_object):
     body_text.append('\\hline%\n')
     
     # BUILD HEADERS
-    for indx in range(len(dimensions)-1):
-        dimension = dimensions[indx+1]
+    for indx in range(len(dimensions)):
+        dimension = str(dimensions[indx])
         dimension += 'pt'
         while dimension[0] == ' ': dimension = dimension[1:]
         item_text = '\\parbox{'+ f'{dimension}' + '}'+\
              '{\\hfill\\\\[-0.3em] \\centering \\textbf{'
              #Inverter} \\\\')
-        range_num = int(int(dimensions[indx+1]) / 5)
+        try:
+            range_num = int(int(dimensions[indx]) / 5)
+        except:
+            raise TypeError("falled")
         evaluated_contents = item['Contents'][0][indx]
-        if len(evaluated_contents) <= range_num:
+        if len(evaluated_contents) <= (range_num):
             item_text += evaluated_contents + '}\\\\[0.1em]}'
         else:
             line_text = item['Contents'][0][indx]
@@ -150,7 +264,7 @@ def build_table(dictionary_object):
                         line_text = line_text[super_indx-novo_indx:]
                         break
             item_text += line_text + '}\\\\[0.1em]}'
-        if indx == (len(dimensions) - 2): item_text += ' \\\\%'
+        if indx == (len(dimensions) - 1): item_text += ' \\\\%'
         else: item_text += ' &%'
         body_text.append(item_text + '\n')
     body_text.append('\\hline\n')
@@ -158,18 +272,18 @@ def build_table(dictionary_object):
     # BUILD TABLE OBJECTS
     contents = item['Contents']
     print(contents)
-    for pre_indx in range(1,len(contents)):
+    for pre_indx in range(1, len(contents)):
         if 'HLINE' in item['Contents'][pre_indx][0].upper():
             body_text.append('\\hline\n')
             continue
-        for indx in range(len(dimensions)-1):
-            dimension = dimensions[indx+1]
+        for indx in range(len(dimensions)):
+            dimension = str(dimensions[indx])
             dimension += 'pt'
             while dimension[0] == ' ': dimension = dimension[1:]
             item_text = '\\parbox{'+ f'{dimension}' + '}'+\
                 '{\\hfill\\\\[-0.3em] \\centering '
                 #Inverter} \\\\')
-            range_num = int(int(dimensions[indx+1]) / 5)
+            range_num = int(int(dimensions[indx]) / 5)
             evaluated_contents = item['Contents'][pre_indx][indx]
             if len(evaluated_contents) <= range_num:
                 item_text += evaluated_contents + ' \\\\[0.1em]}'
@@ -189,7 +303,7 @@ def build_table(dictionary_object):
                             line_text = line_text[super_indx-novo_indx:]
                             break
                 item_text += line_text + ' \\\\[0.1em]}'
-            if indx == (len(dimensions) - 2): item_text += ' \\\\%'
+            if indx == (len(dimensions) - 1): item_text += ' \\\\%'
             else: item_text += ' &%'
             body_text.append(item_text + '\n')
         body_text.append('\\hline\n')
@@ -207,28 +321,56 @@ def build_table(dictionary_object):
 range_num = 50
 for item in body_items:
     if item == 'PAGEBREAK':
+        end_form()
+        checklist_interrupted = 1
         body_text.append('\pagebreak\n')
+        continue
+    try:
+        if not len(item['Checkbox Text']):
+            continue
+    except TypeError:
         continue
     while item['Checkbox Text'][0] == ' ': 
         item['Checkbox Text'] = item['Checkbox Text'][1:]
+    
+    evaluated_contents = item['Checkbox Text']
+    
     if item['Tag'].upper() == 'HEADER':
         if len(body_text) and not checklist_interrupted:
             end_form()
-        start_form(item['Checkbox Text'])
+        start_form(evaluated_contents)
         checklist_interrupted = 0
     elif item['Tag'].upper() == 'START TABLE':
         build_table(item)
         checklist_interrupted = 1
     else:
-        if len(item['Checkbox Text']) <= range_num:
+        if evaluated_contents[0] == '"':
+            print(evaluated_contents)
+        range_adder = 0
+        for j in range(len(evaluated_contents)):
+            try:
+                if "\&" in evaluated_contents[j:j+2]:
+                    range_adder += 1
+                elif "$_{" in evaluated_contents[j:j+3] or \
+                    "$^{" in evaluated_contents[j:j+3]: 
+                    range_adder += 5
+                elif "$||$" in evaluated_contents[j:j+4]: 
+                    range_adder += 2
+                elif "\\textbf{" in evaluated_contents[j:j+9]: 
+                    range_adder += 8
+            except:
+                pass
+        if len(evaluated_contents) <= range_num + range_adder:
             item_tag = item['Tag']
-            item_text = item['Checkbox Text']
+            item_text = evaluated_contents
         else:
             item_tag = item['Tag']
             item_text = ''
-            line_text = item['Checkbox Text']
+            line_text = evaluated_contents
             item['indx_point'] = 0
             sub_num = range_num - 1
+            html_limiter = 4
+            html_counter = 0
             while len(line_text) > range_num:
                 for base_indx in range(range_num):
                     indx_point = item['indx_point']
@@ -236,11 +378,20 @@ for item in body_items:
                     indx = base_indx + indx_point
                     sub_indx = sub_num + indx_point
                     super_indx = range_num + indx_point
-                    if line_text[sub_indx-indx] == ' ':
+                    if line_text[sub_indx-indx] == ' ' and 'url{' not in line_text:
                         item_text += line_text[:sub_indx-indx]
                         item_text += '\\\\%\n\\indent\\space\\hspace{0.21in}%\n'
                         line_text = line_text[super_indx-indx:]
                         break
+                    if line_text[sub_indx-indx] == ' ' and 'url{' in line_text:
+                        item_text += line_text[:sub_indx-indx]
+                        item_text += '\\\\%\n\\indent%\n'
+                        line_text = line_text[super_indx-indx:]
+                        break
+                html_counter += 1
+                if html_counter > html_limiter:
+                    break
+                    
             item_text += line_text
 
         body_text.append('\\NewCheckBox{'+'%' + ' Label ID Below:')
@@ -249,12 +400,13 @@ for item in body_items:
         body_text.append(f'{item_text}%')
         body_text.append('}%')
 
-end_form()
+if not checklist_interrupted:
+    end_form()
 
 # print(body_items)
 # print(body_text)
 
-with open(BODY_TEX, 'w') as f:
+with open(BODY_TEX, 'w', encoding="UTF-8") as f:
     for line in body_text:
         f.write(line + '\n')
 

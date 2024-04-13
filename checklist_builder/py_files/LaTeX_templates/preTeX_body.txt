@@ -1,20 +1,65 @@
 \begin{Form}
 \def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
-\setupCheckListSet{Grandma's Recipe for Cookies}%
+\setupCheckListSet{Solar Arrays and Racking}%
 \NewCheckBox{% Label ID Below:
-salt%
+Solar Label%
 }{% Text Below:
-Two Pounds of Salt%
+Solar Module Label Quoted%
 }%
 \NewCheckBox{% Label ID Below:
-butter%
+Racking%
 }{% Text Below:
-Five Pounds of Butter%
+Racking Quoted%
 }%
 \NewCheckBox{% Label ID Below:
-good%
+Solar Quoted%
 }{% Text Below:
-Sugar and Spice but nothing Nice%
+Solar Arrays Quoted%
+}%
+\NewCheckBox{% Label ID Below:
+Tilt Quoted%
+}{% Text Below:
+Each Array's Tilt Quoted%
+}%
+\NewCheckBox{% Label ID Below:
+PVLink Tolerance%
+}{% Text Below:
+2° Tilt and 10° Azimuth Tolerance per Optimizer%
+}%
+\NewCheckBox{% Label ID Below:
+PVLink Limits%
+}{% Text Below:
+420V$_{OC}$ \& (18 I$_{SC}$ PV Link $||$ 12A I$_{SC}$ SnapRS)%
+}%
+\NewCheckBox{% Label ID Below:
+AC DC Ratio%
+}{% Text Below:
+AC/DC Ratio 150\% $||$ 160\% w/ Battery%
+}%
+\NewCheckBox{% Label ID Below:
+Splices%
+}{% Text Below:
+Splicing / MC-4 Y-Connectors%
+}%
+\NewCheckBox{% Label ID Below:
+PV Link Str%
+}{% Text Below:
+Two PV Links per String \& Six PV Link Maximum%
+}%
+\NewCheckBox{% Label ID Below:
+Roof Penetrations%
+}{% Text Below:
+Roof Penetrations / Junction Box Wiring Photos%
+}%
+\NewCheckBox{% Label ID Below:
+Homerun%
+}{% Text Below:
+Home Run / Initial Roof Conduit Penetrations%
+}%
+\NewCheckBox{% Label ID Below:
+Flashing%
+}{% Text Below:
+Weatherproofing \& Flashing%
 }%
 %
 \closeoutChecklistSet%
@@ -24,27 +69,285 @@ Sugar and Spice but nothing Nice%
 \end{Form}
 \begin{Form}
 \def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
-\setupCheckListSet{Grandpa's Recipe for Happiness}%
+\setupCheckListSet{Electrical Layout}%
 \NewCheckBox{% Label ID Below:
-defeat%
+Wall Photos%
 }{% Text Below:
-I have always wanted to eat fish before the sea\\%
-\indent\space\hspace{0.21in}%
-water dries up did you know?%
+Wall Photo(s) of All Equipment%
 }%
 \NewCheckBox{% Label ID Below:
-surrender%
+Direct Sun%
 }{% Text Below:
-Give Up All Hope Ye Who Enter Here!%
+Equipment is not in Direct Sunlight%
 }%
 \NewCheckBox{% Label ID Below:
-bad%
+Clearances%
 }{% Text Below:
-I did not know that you could find a cat fish\\%
+Equipment Clearances Met%
+}%
+\NewCheckBox{% Label ID Below:
+Battery Cells%
+}{% Text Below:
+Battery Cabinet Photos Showing Batteries%
+}%
+\NewCheckBox{% Label ID Below:
+12V BMU%
+}{% Text Below:
+Battery BMU 12V Battery Connected%
+}%
+\NewCheckBox{% Label ID Below:
+Battery Pwr Comm%
+}{% Text Below:
+Battery Power \& Comm. Wired%
+}%
+\NewCheckBox{% Label ID Below:
+Battery Serials%
+}{% Text Below:
+Battery Cell S/N Photos (one per battery cell)%
+}%
+\NewCheckBox{% Label ID Below:
+Battery Quoted%
+}{% Text Below:
+Correct Battery Cell Quoted%
+}%
+\NewCheckBox{% Label ID Below:
+Inverter Serial%
+}{% Text Below:
+Inverter Serial Number Photos%
+}%
+\NewCheckBox{% Label ID Below:
+Inverter Wiring%
+}{% Text Below:
+Inverter Wired (No N1 for Generac ATS)%
+}%
+\NewCheckBox{% Label ID Below:
+RGM Photos%
+}{% Text Below:
+RGM Production Meter Installed For Each Inverter%
+}%
+\NewCheckBox{% Label ID Below:
+Cat 5 Term%
+}{% Text Below:
+Cat-5 Terminated in Internet, CTs, \& ATS ports%
+}%
+\NewCheckBox{% Label ID Below:
+PWRcell Cat 5%
+}{% Text Below:
+PWRcell ATS w/ both Cat-5 Ports Terminated%
+}%
+\NewCheckBox{% Label ID Below:
+Consumption CTs%
+}{% Text Below:
+Consumption CTs properly installed on line-side%
+}%
+\NewCheckBox{% Label ID Below:
+EGC Grounded%
+}{% Text Below:
+All Equipment is Properly Grounded with EGC%
+}%
+%
+\closeoutChecklistSet%
+
+
+\\
+\end{Form}
+\begin{Form}
+\def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
+\setupCheckListSet{Interconnection}%
+\NewCheckBox{% Label ID Below:
+ATS E%
+}{% Text Below:
+Only One Inverter Connected to ATS E Terminals%
+}%
+\NewCheckBox{% Label ID Below:
+ATS Cont%
+}{% Text Below:
+Only ATS Controlled Inverter Downstream of ATS%
+}%
+\NewCheckBox{% Label ID Below:
+Feeder OCPD%
+}{% Text Below:
+Feeder Sized load-OCPD or (line-OCPD + EMS)%
+}%
+\NewCheckBox{% Label ID Below:
+Sub OCPD%
+}{% Text Below:
+Busbar w/ Main Breaker or (line-OCPD + EMS)%
+}%
+\NewCheckBox{% Label ID Below:
+Super OCPD%
+}{% Text Below:
+Busbars Satisfy NEC 705.12%
+}%
+\NewCheckBox{% Label ID Below:
+Disc Sized%
+}{% Text Below:
+AC Disconnects Properly Sized%
+}%
+\NewCheckBox{% Label ID Below:
+Dedic Disc%
+}{% Text Below:
+Dedicated Disconnect Installed%
+}%
+\NewCheckBox{% Label ID Below:
+NG Bond%
+}{% Text Below:
+N-G Bond at ATS $<$only if service entrance$>$%
+}%
+\NewCheckBox{% Label ID Below:
+Load Manage%
+}{% Text Below:
+Load Management Photos Provided%
+}%
+\NewCheckBox{% Label ID Below:
+Max Load%
+}{% Text Below:
+Maximum Load Breaker Size is not Exceeded%
+}%
+%
+\closeoutChecklistSet%
+
+
+\\
+\end{Form}
+\begin{Form}
+\def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
+\setupCheckListSet{Common Errors}%
+\NewCheckBox{% Label ID Below:
+Neutral Identify%
+}{% Text Below:
+Neutral Identification Complies with NEC 200.6%
+}%
+\NewCheckBox{% Label ID Below:
+EGC Identification%
+}{% Text Below:
+EGC Identification Complies with NEC 250.119%
+}%
+\NewCheckBox{% Label ID Below:
+Trench Depth %
+}{% Text Below:
+Trench Depth Photos Comply with NEC 300.5%
+}%
+\NewCheckBox{% Label ID Below:
+Cat 5 Separately%
+}{% Text Below:
+Cate-5 Comm. Cables are Separated per 2020 NEC\\%
 \indent\space\hspace{0.21in}%
-before it decides to drink a full load of donkey\\%
+805.133 or 2023 NEC 800.133(B)%
+}%
+\NewCheckBox{% Label ID Below:
+Grandfather Date%
+}{% Text Below:
+Valid Configuration If Installed After 03/14\\%
+\indent%
+\url{https://generac-fs.inquisiqlms.com/warehouse/generac-fs/documents/course/627/PWRcell1PInverterSLDs_RevK.pdf}%
+}%
+%
+\closeoutChecklistSet%
+
+
+\\
+\end{Form}
+\pagebreak
+
+\begin{Form}
+\def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
+\setupCheckListSet{Commissioning}%
+\NewCheckBox{% Label ID Below:
+port Inv%
+}{% Text Below:
+All Inverters on PWRfleet Portal%
+}%
+\NewCheckBox{% Label ID Below:
+port Owner%
+}{% Text Below:
+Ownership $||$ Editor Properly Provided%
+}%
+\NewCheckBox{% Label ID Below:
+port RGM%
+}{% Text Below:
+Portal Shows All Equipment, Including RGM%
+}%
+\NewCheckBox{% Label ID Below:
+inv Modem%
+}{% Text Below:
+Cellular Modem Photo Installed with Beacon%
+}%
+\NewCheckBox{% Label ID Below:
+inv Comp Rep%
+}{% Text Below:
+Beacon Compliance Report PDF%
+}%
+\NewCheckBox{% Label ID Below:
+Beacon LTE%
+}{% Text Below:
+Beacon Screenshot Showing RGM \& LTE Cellular%
+}%
+\NewCheckBox{% Label ID Below:
+Island%
+}{% Text Below:
+Islanding Test (Arrows from PV$||$ESS to Home)%
+}%
+\NewCheckBox{% Label ID Below:
+inv SOC%
+}{% Text Below:
+Inverter Screen: Battery Min. SOC = 20\%%
+}%
+\NewCheckBox{% Label ID Below:
+inv SOC Abs%
+}{% Text Below:
+Inverter Screen: Battery Min. SoOC Abs. = 5\%%
+}%
+\NewCheckBox{% Label ID Below:
+PV Link%
+}{% Text Below:
+Inverter Screen: Each ""SnapRSInstalled"" Count\\%
 \indent\space\hspace{0.21in}%
-wares that smell better than roses%
+OR Beacon Screenshot Showing PV Link Summary%
+}%
+\NewCheckBox{% Label ID Below:
+PV Link Limit%
+}{% Text Below:
+PV Links @ 2.5-3kW w/ PVLink Sizing Tool%
+}%
+%
+\closeoutChecklistSet%
+
+
+\\
+\end{Form}
+\begin{Form}
+\def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
+\setupCheckListSet{Compliance Report}%
+\NewCheckBox{% Label ID Below:
+Post Comm%
+}{% Text Below:
+Post Commissioning Compliance Report%
+}%
+\NewCheckBox{% Label ID Below:
+PV Only Comp%
+}{% Text Below:
+PV Only: Operation Modes (Grid Tie \& Sell)%
+}%
+\NewCheckBox{% Label ID Below:
+Trans Comp%
+}{% Text Below:
+NumTransSwitchs: ATS: 1 $||$  Generator: 2%
+}%
+\NewCheckBox{% Label ID Below:
+Load Shedding 1%
+}{% Text Below:
+Enable Load Shedding at 1 with PWRmanager%
+}%
+\NewCheckBox{% Label ID Below:
+Load Shedding 2%
+}{% Text Below:
+Enable Load Shedding at 2 without PWRmanager%
+}%
+\NewCheckBox{% Label ID Below:
+Island En%
+}{% Text Below:
+Islanding Enabled%
 }%
 %
 \closeoutChecklistSet%
@@ -55,7 +358,7 @@ wares that smell better than roses%
 
 \begin{table}[h!]%
 
-\caption{Table Name Shown Here}%
+\caption{Generac Capacitance Table}%
 
 \centering%
 
@@ -63,77 +366,81 @@ wares that smell better than roses%
 
 \hline%
 
-\parbox{90pt}{\hfill\\[-0.3em] \centering \textbf{Relationship}\\[0.1em]} &%
+\parbox{90pt}{\hfill\\[-0.3em] \centering \textbf{Inverter} \\ \textbf{Configuration}\\[0.1em]} &%
 
-\parbox{80pt}{\hfill\\[-0.3em] \centering \textbf{ Quantification}\\[0.1em]} &%
+\parbox{60pt}{\hfill\\[-0.3em] \centering \textbf{Battery} \\ \textbf{Module} \\ \textbf{Quantity}\\[0.1em]} &%
 
-\parbox{60pt}{\hfill\\[-0.3em] \centering \textbf{ Ratios for} \\ \textbf{Thinkers}\\[0.1em]} &%
+\parbox{60pt}{\hfill\\[-0.3em] \centering \textbf{Available} \\ \textbf{Capacitance} \\ \textbf{\[kW\]}\\[0.1em]} &%
 
-\parbox{60pt}{\hfill\\[-0.3em] \centering \textbf{ Danger} \\ \textbf{Close Level} \\ \textbf{Evaluation}\\[0.1em]} \\%
-
-\hline
-
-\hline
-
-\parbox{90pt}{\hfill\\[-0.3em] \centering Granny wakes \\[0.1em]} &%
-
-\parbox{80pt}{\hfill\\[-0.3em] \centering  1 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  3.5 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  2.2 \\[0.1em]} \\%
-
-\hline
-
-\parbox{90pt}{\hfill\\[-0.3em] \centering Gramps wakes \\[0.1em]} &%
-
-\parbox{80pt}{\hfill\\[-0.3em] \centering  2 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  3.8 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  2.1 \\[0.1em]} \\%
-
-\hline
-
-\parbox{90pt}{\hfill\\[-0.3em] \centering Breakfast is late \\[0.1em]} &%
-
-\parbox{80pt}{\hfill\\[-0.3em] \centering  2 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  6 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  4 \\[0.1em]} \\%
-
-\hline
-
-\parbox{90pt}{\hfill\\[-0.3em] \centering Lunch is late \\[0.1em]} &%
-
-\parbox{80pt}{\hfill\\[-0.3em] \centering  2 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  8 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  8 \\[0.1em]} \\%
-
-\hline
-
-\parbox{90pt}{\hfill\\[-0.3em] \centering Supper is late \\[0.1em]} &%
-
-\parbox{80pt}{\hfill\\[-0.3em] \centering  1 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  9.9 \\[0.1em]} &%
-
-\parbox{60pt}{\hfill\\[-0.3em] \centering  2 \\[0.1em]} \\%
+\parbox{60pt}{\hfill\\[-0.3em] \centering \textbf{Maximum} \\ \textbf{240V Load} \\ \textbf{Braker}\\[0.1em]} \\%
 
 \hline
 
 \hline
 
-\parbox{90pt}{\hfill\\[-0.3em] \centering Dies Irae Adventi \\[0.1em]} &%
+\hline
 
-\parbox{80pt}{\hfill\\[-0.3em] \centering  0 \\[0.1em]} &%
+\parbox{90pt}{\hfill\\[-0.3em] \centering Protected Backup \\ Loads Panel or ATS \\[0.1em]} &%
 
-\parbox{60pt}{\hfill\\[-0.3em] \centering  0 \\[0.1em]} &%
+\parbox{60pt}{\hfill\\[-0.3em] \centering 3 \\[0.1em]} &%
 
-\parbox{60pt}{\hfill\\[-0.3em] \centering  0 \\[0.1em]} \\%
+\parbox{60pt}{\hfill\\[-0.3em] \centering 3.4 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 20 \\[0.1em]} \\%
+
+\hline
+
+\parbox{90pt}{\hfill\\[-0.3em] \centering Protected Backup \\ Loads Panel or ATS \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 4 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 4.5 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 25 \\[0.1em]} \\%
+
+\hline
+
+\parbox{90pt}{\hfill\\[-0.3em] \centering Protected Backup \\ Loads Panel or ATS \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 5 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 5.6 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 30 \\[0.1em]} \\%
+
+\hline
+
+\parbox{90pt}{\hfill\\[-0.3em] \centering Protected Backup \\ Loads Panel or ATS \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 6 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 6.7 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 35 \\[0.1em]} \\%
+
+\hline
+
+\hline
+
+\hline
+
+\parbox{90pt}{\hfill\\[-0.3em] \centering ATS \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 6 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 9 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 50* \\[0.1em]} \\%
+
+\hline
+
+\parbox{90pt}{\hfill\\[-0.3em] \centering ATS \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 6 \&2 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 11 \\[0.1em]} &%
+
+\parbox{60pt}{\hfill\\[-0.3em] \centering 60* \\[0.1em]} \\%
 
 \hline
 
@@ -143,28 +450,7 @@ wares that smell better than roses%
 
 \\[0.5em]%
 
- Any Captions Shown Here but leave blank for no captions\\[1em]%
+\ensuremath{^*}  Please ensure larger loads are managed by the PWRmanager or SMMs.\\[1em]%
 
 \end{table}%
 
-\pagebreak
-
-\begin{Form}
-\def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
-\setupCheckListSet{Auntie's Recipe for Soap}%
-\NewCheckBox{% Label ID Below:
-dostoyesky%
-}{% Text Below:
-Maybe you found a cat%
-}%
-\NewCheckBox{% Label ID Below:
-domstoyesky%
-}{% Text Below:
-But I found a dog%
-}%
-%
-\closeoutChecklistSet%
-
-
-\\
-\end{Form}
