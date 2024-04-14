@@ -22,6 +22,21 @@ Tilt Quoted%
 Each Array's Tilt Quoted%
 }%
 \NewCheckBox{% Label ID Below:
+Roof Penetrations%
+}{% Text Below:
+Roof Penetrations / Junction Box Wiring Photos%
+}%
+\NewCheckBox{% Label ID Below:
+Homerun%
+}{% Text Below:
+Home Run / Initial Roof Conduit Penetrations%
+}%
+\NewCheckBox{% Label ID Below:
+Flashing%
+}{% Text Below:
+Weatherproofing \& Flashing%
+}%
+\NewCheckBox{% Label ID Below:
 PVLink Tolerance%
 }{% Text Below:
 2° Tilt and 10° Azimuth Tolerance per Optimizer%
@@ -37,29 +52,14 @@ AC DC Ratio%
 AC/DC Ratio 150\% $||$ 160\% w/ Battery%
 }%
 \NewCheckBox{% Label ID Below:
-Splices%
-}{% Text Below:
-Splicing / MC-4 Y-Connectors%
-}%
-\NewCheckBox{% Label ID Below:
 PV Link Str%
 }{% Text Below:
 Two PV Links per String \& Six PV Link Maximum%
 }%
 \NewCheckBox{% Label ID Below:
-Roof Penetrations%
+Splices%
 }{% Text Below:
-Roof Penetrations / Junction Box Wiring Photos%
-}%
-\NewCheckBox{% Label ID Below:
-Homerun%
-}{% Text Below:
-Home Run / Initial Roof Conduit Penetrations%
-}%
-\NewCheckBox{% Label ID Below:
-Flashing%
-}{% Text Below:
-Weatherproofing \& Flashing%
+Splicing / MC-4 Y-Connectors%
 }%
 %
 \closeoutChecklistSet%
@@ -91,16 +91,6 @@ Battery Cells%
 Battery Cabinet Photos Showing Batteries%
 }%
 \NewCheckBox{% Label ID Below:
-12V BMU%
-}{% Text Below:
-Battery BMU 12V Battery Connected%
-}%
-\NewCheckBox{% Label ID Below:
-Battery Pwr Comm%
-}{% Text Below:
-Battery Power \& Comm. Wired%
-}%
-\NewCheckBox{% Label ID Below:
 Battery Serials%
 }{% Text Below:
 Battery Cell S/N Photos (one per battery cell)%
@@ -116,14 +106,33 @@ Inverter Serial%
 Inverter Serial Number Photos%
 }%
 \NewCheckBox{% Label ID Below:
-Inverter Wiring%
-}{% Text Below:
-Inverter Wired (No N1 for Generac ATS)%
-}%
-\NewCheckBox{% Label ID Below:
 RGM Photos%
 }{% Text Below:
 RGM Production Meter Installed For Each Inverter%
+}%
+\NewCheckBox{% Label ID Below:
+Consumption CTs%
+}{% Text Below:
+Consumption CTs properly installed on line-side%
+}%
+%
+\closeoutChecklistSet%
+
+
+\\
+\end{Form}
+\begin{Form}
+\def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
+\setupCheckListSet{Wiring}%
+\NewCheckBox{% Label ID Below:
+EGC Grounded%
+}{% Text Below:
+All Equipment is Properly Grounded with EGC%
+}%
+\NewCheckBox{% Label ID Below:
+Service Bonding%
+}{% Text Below:
+N-G Bond Only at Service \& PV Only Disonnect%
 }%
 \NewCheckBox{% Label ID Below:
 Cat 5 Term%
@@ -136,14 +145,19 @@ PWRcell Cat 5%
 PWRcell ATS w/ both Cat-5 Ports Terminated%
 }%
 \NewCheckBox{% Label ID Below:
-Consumption CTs%
+Inverter Wiring%
 }{% Text Below:
-Consumption CTs properly installed on line-side%
+Inverter Wired (No N1 for Generac ATS)%
 }%
 \NewCheckBox{% Label ID Below:
-EGC Grounded%
+12V BMU%
 }{% Text Below:
-All Equipment is Properly Grounded with EGC%
+Battery BMU 12V Battery Connected%
+}%
+\NewCheckBox{% Label ID Below:
+Battery Pwr Comm%
+}{% Text Below:
+Battery Power \& Comm. Wired%
 }%
 %
 \closeoutChecklistSet%
@@ -154,16 +168,6 @@ All Equipment is Properly Grounded with EGC%
 \begin{Form}
 \def\LayoutCheckField#1#2{\parbox[c][5mm]{5mm}{\centering\footnotesize\strut #2} #1}\centering%
 \setupCheckListSet{Interconnection}%
-\NewCheckBox{% Label ID Below:
-ATS E%
-}{% Text Below:
-Only One Inverter Connected to ATS E Terminals%
-}%
-\NewCheckBox{% Label ID Below:
-ATS Cont%
-}{% Text Below:
-Only ATS Controlled Inverter Downstream of ATS%
-}%
 \NewCheckBox{% Label ID Below:
 Feeder OCPD%
 }{% Text Below:
@@ -203,6 +207,16 @@ Load Management Photos Provided%
 Max Load%
 }{% Text Below:
 Maximum Load Breaker Size is not Exceeded%
+}%
+\NewCheckBox{% Label ID Below:
+ATS E%
+}{% Text Below:
+Only One Inverter Connected to ATS E Terminals%
+}%
+\NewCheckBox{% Label ID Below:
+ATS Cont%
+}{% Text Below:
+Only ATS Controlled Inverter Downstream of ATS%
 }%
 %
 \closeoutChecklistSet%

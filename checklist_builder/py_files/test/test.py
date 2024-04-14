@@ -1,6 +1,33 @@
 import csv
 
 
+from datetime import date
+
+## TODO: For program that buildsa curated suite:
+##      Figure out a way of comparing csv files
+###         RECOMMENDATION: Utilize a checksum - maybe write one for fun??
+######          JPEG Checksum? ? ? → Odd 256 x 256 x (4 x 4 cosine)
+######               |- Cosine filter:: << Figure out the preliminary filter>>
+#########                   Maybe a binary sum filter?
+#########                   Maybe a vowel sum filter + int summer filter? 
+######               |- Hilbert Transform Data Aggregation
+######               |- Split into sections of 4096 bytes
+######               |- Hilbert Transform Even portion
+######               |- Sum 23rd 256 with 256 reset (value range: 1-254)
+######               |- lshift rotate outter shell of 1020 pixels via coupling stack
+######               |- first difference into shiftee stack (clockwise)
+######               |- remaining pixels into outter shell starting @ 0,0
+######               |- once complete continue with shiftee stack until 1,0
+######               |- Finally, flatten into 2 uint16 with (0xB threshold filter of 4x4)
+#
+## today =date.today()
+## file_has_been_updated = False
+#
+## with open(BODY_TEX, 'r', encoding="UTF-8") as f:
+#
+###
+
+
 # APP_DIR = "./checklist_builder/"
 APP_DIR = "./"
 PY_DIR = APP_DIR+"py_files/"
@@ -51,61 +78,73 @@ table_under_evaluation = 0
 checklist_interrupted = 0
 
 
-def process_csv_contents(row):
-    if '"' == row[1][0]:
-        print(row[1:])
-        new_contents = row[1]
-        for collected in row[2:-3]:
-            new_contents += ',' + collected
-        new_contents = new_contents[1:-2]
-    else:
-        new_contents = row[1]
+def LaTeXize_contents(contents):
     count = 0
     ## The contents LaTeX-ification loop
-    while (count + 1) < len(new_contents):
-        for count, character in enumerate(new_contents):
-            if "|" == character and "|" == new_contents[count-1] and \
-                new_contents[count-2:count+2] != "$||$":
-                new_contents = new_contents[:count-1] + "$||$" + new_contents[count+1:]
+    while (count + 1) < len(contents):
+        for count, character in enumerate(contents):
+            if "|" == character and "|" == contents[count-1] and \
+                contents[count-2:count+2] != "$||$":
+                contents = contents[:count-1] + "$||$" + contents[count+1:]
                 break
-            if "VOC" == new_contents[count-2:count+1]:
-                new_contents = new_contents[:count-2] + "V$_{O"+"C}$" + new_contents[count+1:]
+            if "VOC" == contents[count-2:count+1]:
+                contents = contents[:count-2] + "V$_{O"+"C}$" + contents[count+1:]
                 break
-            if "ISC" == new_contents[count-2:count+1]:
-                new_contents = new_contents[:count-2] + "I$_{S"+"C}$" + new_contents[count+1:]
+            if "ISC" == contents[count-2:count+1]:
+                contents = contents[:count-2] + "I$_{S"+"C}$" + contents[count+1:]
                 break
-            if "https:" == new_contents[count-5:count+1] and\
-                "url{https:" != new_contents[count-9:count+1]:
-                for p in range(len(new_contents[count+1:])):
-                    if " " == new_contents[p + count]:
-                        new_contents = new_contents[:p+count] + '}' + new_contents[p+count:]
+            if "https:" == contents[count-5:count+1] and\
+                "url{https:" != contents[count-9:count+1]:
+                for p in range(len(contents[count+1:])):
+                    if " " == contents[p + count]:
+                        contents = contents[:p+count] + '}' + contents[p+count:]
                         break
-                if '}' not in new_contents:
-                    new_contents = new_contents + '}'
-                print(new_contents)
-                new_contents = new_contents[:count-5] + "\\url{" + new_contents[count-5:]
+                if '}' not in contents:
+                    contents = contents + '}'
+                contents = contents[:count-5] + "\\url{" + contents[count-5:]
                 break
             if (character == '<')\
-                and new_contents[count-1] is not "$"\
-                and new_contents[count+1] is not "$":#\
-                new_contents = new_contents[:count] + '$' + new_contents[count:count+1] \
-                    + '$' + new_contents[count+1:]
+                and contents[count-1] is not "$"\
+                and contents[count+1] is not "$":#\
+                contents = contents[:count] + '$' + contents[count:count+1] \
+                    + '$' + contents[count+1:]
                 break
             if (character == '>')\
-                and new_contents[count-1] is not "$":#\
-                new_contents = new_contents[:count] + '$' + new_contents[count:count+1] \
-                    + '$' + new_contents[count+1:]
+                and contents[count-1] is not "$":#\
+                contents = contents[:count] + '$' + contents[count:count+1] \
+                    + '$' + contents[count+1:]
+                break
+            if character == '[' and contents[count+2] == ']' and\
+                contents[count-1] != "\\":
+                contents = contents[:count] + "\\" + contents[count:count+2]\
+                    + "\\" + contents[count+2:]
+                break
+            if character == '[' and contents[count+3] == ']' and\
+                contents[count-1] != "\\":
+                contents = contents[:count] + "\\" + contents[count:count+3]\
+                    + "\\" + contents[count+3:]
                 break
             if (character == "&" or character == "%")\
-                and new_contents[count-1] is not "\\"\
-                and new_contents[count-1] is not "|":#\
-                # and new_contents[count+1] is not "_" \
-                # and new_contents[count+1] is not "*" \
-                # and new_contents[count+1] is not "\\":
-                new_contents = new_contents[:count] + '\\' + new_contents[count:]
+                and contents[count-1] is not "\\"\
+                and contents[count-1] is not "|":#\
+                # and contents[count+1] is not "_" \
+                # and contents[count+1] is not "*" \
+                # and contents[count+1] is not "\\":
+                contents = contents[:count] + '\\' + contents[count:]
                 break
-            
-            
+    return contents
+
+
+def process_csv_contents(row):
+    if '"' == row[1][0]:
+        old_contents = row[1]
+        for collected in row[2:-3]:
+            old_contents += ',' + collected
+        old_contents = old_contents[1:-2]
+    else:
+        old_contents = row[1]
+    new_contents = LaTeXize_contents(old_contents)
+
     return new_contents
 
 
@@ -120,7 +159,6 @@ with open(csv_file, 'r', newline='', encoding='ANSI') as f:
             and "Tag" == row[0]\
             and "Checkbox Text" == row[1]\
             and "Section Title" == row[4]:
-            # print("FOUND")
             header_not_found = 0
         elif header_not_found:
             continue
@@ -145,54 +183,16 @@ with open(csv_file, 'r', newline='', encoding='ANSI') as f:
                     continue
         elif table_under_evaluation:
             for index in range(len(row)):
-                new_contents = row[index]
+                old_contents = row[index]
                 ### TODO: Refactor this as a function that returns new contents
-                count = 0
-                while (count + 1) < len(new_contents):
-                    for count, character in enumerate(new_contents):
-                        if "|" == character and "|" == new_contents[count-1] and \
-                            new_contents[count-2:count+2] != "$||$":
-                            new_contents = new_contents[:count-1] + "$||$" + new_contents[count+1:]
-                            break
-                        if "VOC" == new_contents[count-2:count+1]:
-                            new_contents = new_contents[:count-2] + "V$_{O"+"C}$" + new_contents[count+1:]
-                            break
-                        if "ISC" == new_contents[count-2:count+1]:
-                            new_contents = new_contents[:count-2] + "I$_{S"+"C}$" + new_contents[count+1:]
-                            break
-                        if "https:" == new_contents[count-5:count+1] and\
-                            "url{https:" == new_contents[count-9:count+1]:
-                            for p in range(len(new_contents[count+1:])):
-                                if " " == new_contents[p + count]:
-                                    new_contents = new_contents[:p+count] + '}' + new_contents[p+count:]
-                                    break
-                            print(new_contents)
-                            new_contents = new_contents[:count-5] + "\\url{" + new_contents[count+5:]
-                            break
-                        if character == '[' and new_contents[count+2] == ']' and\
-                            new_contents[count-1] != "\\":
-                            new_contents = new_contents[:count] + "\\" + new_contents[count:count+2]\
-                                + "\\" + new_contents[count+2:]
-                            break
-                        if character == '[' and new_contents[count+3] == ']' and\
-                            new_contents[count-1] != "\\":
-                            new_contents = new_contents[:count] + "\\" + new_contents[count:count+3]\
-                                + "\\" + new_contents[count+3:]
-                            break
-                        if (character == "&" or character == "%")\
-                            and new_contents[count-1] is not "\\"\
-                            and new_contents[count-1] is not "|":#\
-                            # and new_contents[count+1] is not "_" \
-                            # and new_contents[count+1] is not "*" \
-                            # and new_contents[count+1] is not "\\":
-                            new_contents = new_contents[:count] + '\\' + new_contents[count:]
-                            break
+                new_contents = LaTeXize_contents(old_contents)
                 row[index] = new_contents
-                print(new_contents)
                     
             body_items[-1]['Contents'].append(row)
         elif 'PAGEBREAK' in row[0].upper():
             body_items.append('PAGEBREAK')
+        elif 'INLINE' in row[0].upper():
+            body_items.append(row[1])
         elif len(row[1]):
             new_contents = process_csv_contents(row)
             body_items.append(
@@ -271,7 +271,6 @@ def build_table(dictionary_object):
     body_text.append('\\hline\n')
     # BUILD TABLE OBJECTS
     contents = item['Contents']
-    print(contents)
     for pre_indx in range(1, len(contents)):
         if 'HLINE' in item['Contents'][pre_indx][0].upper():
             body_text.append('\\hline\n')
@@ -344,8 +343,6 @@ for item in body_items:
         build_table(item)
         checklist_interrupted = 1
     else:
-        if evaluated_contents[0] == '"':
-            print(evaluated_contents)
         range_adder = 0
         for j in range(len(evaluated_contents)):
             try:
@@ -403,17 +400,13 @@ for item in body_items:
 if not checklist_interrupted:
     end_form()
 
-# print(body_items)
-# print(body_text)
 
 with open(BODY_TEX, 'w', encoding="UTF-8") as f:
     for line in body_text:
         f.write(line + '\n')
 
 for preTeX in preTexFiles:
-    # print(preTeX)
     with open(preTeX,'r') as f:
-        #  print(f)
          for line in f.readlines():
             if not len(line[1:]): continue
             line = parseLine(line)
@@ -424,4 +417,3 @@ with open(TEX_FILE, 'w') as f:
     f.writelines(tex_lines)
 
         
-# print(csv_db)

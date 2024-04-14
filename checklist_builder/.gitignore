@@ -54,6 +54,8 @@ coverage.xml
 .pytest_cache/
 cover/
 snips/*
+tex_files/*
+preTeX_body*
 
 # Translations
 *.mo
