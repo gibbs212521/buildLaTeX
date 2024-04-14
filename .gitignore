@@ -48,7 +48,7 @@ nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
-*ignore_*.py
+*ignore_*
 *email.txt
 .hypothesis/
 .pytest_cache/
