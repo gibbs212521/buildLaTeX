@@ -1,7 +1,6 @@
 import sys
 import os
 
-from datetime import date
 
 ## TODO: For program that buildsa curated suite:
 ##      Figure out a way of comparing csv files
