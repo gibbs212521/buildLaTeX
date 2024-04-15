@@ -11,6 +11,7 @@ __pycache__/
 .Python
 */build/*
 */csv_files/*
+*/preTeX_body.txt
 develop-eggs/
 dist/
 downloads/
