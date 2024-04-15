@@ -10,7 +10,7 @@ __pycache__/
 *.vscode*
 .Python
 */build/*
-*/preTeX_body.txt
+*/preTeX_body*
 develop-eggs/
 dist/
 downloads/
