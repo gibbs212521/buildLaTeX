@@ -115,16 +115,6 @@ def LaTeXize_contents(contents):
                 contents = contents[:count] + '$' + contents[count:count+1] \
                     + '$' + contents[count+1:]
                 break
-            if character == '[' and contents[count+2] == ']' and\
-                contents[count-1] != "\\":
-                contents = contents[:count] + "\\" + contents[count:count+2]\
-                    + "\\" + contents[count+2:]
-                break
-            if character == '[' and contents[count+3] == ']' and\
-                contents[count-1] != "\\":
-                contents = contents[:count] + "\\" + contents[count:count+3]\
-                    + "\\" + contents[count+3:]
-                break
             if (character == "&" or character == "%")\
                 and contents[count-1] is not "\\"\
                 and contents[count-1] is not "|":#\
