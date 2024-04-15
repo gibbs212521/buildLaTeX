@@ -9,3 +9,5 @@ recommended in the .csv files
    a. "nmake" → Creates a pdf of each .csv file in .\csv_files directory
    b. "nmake show" → Creates and opens each pdf in the .\tex_files directory
    c. "nmake open" → Opens all pdf checklists in the .\tex_files directory
+
+Note: Please run nmake from the "checklist_builder" directory
