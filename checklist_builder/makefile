@@ -1,5 +1,6 @@
 ##
-##### 
+##### 	Makefile uses stack push-pop operations to make up for NMAKE weakness 
+#####	with respect to file parsing
 ##
 ##### CONSTANT BOILER PLATE #######
 OUTPUTPATH=.\tex_files
@@ -17,22 +18,6 @@ PYTHON_FILENAME = .\py_files\src\tex_writer.py
 
 PYTHON_CMD = python 
 PYTHON_CMD = $(PYTHON_CMD)  $(PYTHON_FILENAME) -f 
-
-
-### app file ending ###
-# $(MAKE_CALL) code here 
-!ifndef 0 # \	
-EXE_FILETYPE=.exe # \
-!else
-# Make code here 
-EXE_FILETYPE=#
-#
-!endif
-
-INCL= 
-CC=gcc
-CFLAGS= #-I $(INCL)
-
 
 
 # Code below should allow $(MAKE_CALL) and make to operate successfully
