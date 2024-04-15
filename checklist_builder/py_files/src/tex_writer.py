@@ -162,8 +162,9 @@ def start_form(section_name):
     body_text.append('\\setupCheckListSet{'+f'{section_name}'+'}%')
 
 def end_form():
-    body_text.append('%\n\\closeoutChecklistSet%\n')
-    body_text.append('\n\\\\\n\\end{Form}')
+    if not checklist_interrupted:
+        body_text.append('%\n\\closeoutChecklistSet%\n')
+        body_text.append('\n\\\\\n\\end{Form}')
 
 def build_table(dictionary_object):
     end_form()

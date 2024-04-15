@@ -147,12 +147,6 @@ wares that smell better than roses%
 
 \end{table}%
 
-%
-\closeoutChecklistSet%
-
-
-\\
-\end{Form}
 \pagebreak
 
 \begin{Form}

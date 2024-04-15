@@ -2,21 +2,8 @@
 ##### 
 ##
 ##### CONSTANT BOILER PLATE #######
-BUILDPATH=.\tex_files
-BINPATH=$(BUILDPATH)\bin
-OBJPATH=$(BUILDPATH)\obj
-TESTPATH=$(BUILDPATH)\test
-OUTPUTPATH=$(BUILDPATH)\output
-TEST_BINPATH=$(TESTPATH)\bin
-TEST_OBJPATH=$(TESTPATH)\obj
+OUTPUTPATH=.\tex_files
 
-#FILENAME=kata
-FILENAME=output
-TEX_FILENAME=$(FILENAME).tex
-AUX_FILENAME=$(FILENAME).aux
-LOG_FILENAME=$(FILENAME).log
-OUT_FILENAME=$(FILENAME).out
-PDF_FILENAME=$(FILENAME).pdf
 
 BUILD_TEX=pdflatex
 OUTPUT_CMD=--output-directory=
@@ -24,11 +11,12 @@ OUTPUT_CMD=--output-directory=
 BUILDER_OUTPUT=$(OUTPUT_CMD)$(OUTPUTPATH)
 BUILDER_OPTIONS=$(BUILDER_OUTPUT)
 
-AUX_FILES=$(OUTPUTPATH)\$(AUX_FILENAME)
-AUX_FILES=$(AUX_FILES) $(OUTPUTPATH)\$(LOG_FILENAME)
-AUX_FILES=$(AUX_FILES) $(OUTPUTPATH)\$(OUT_FILENAME)
 
-PDF_FILE=$(OUTPUTPATH)\$(PDF_FILENAME)
+
+PYTHON_FILENAME = .\py_files\src\tex_writer.py 
+
+PYTHON_CMD = python 
+PYTHON_CMD = $(PYTHON_CMD)  $(PYTHON_FILENAME) -f 
 
 
 ### app file ending ###
@@ -70,57 +58,113 @@ endif #
 
 
 ##### CONSTANT BUILD #######
-MAKE: pdf
+MAKE:: 
+	$(MAKE_CALL) BUILD_DIR
+	$(MAKE_CALL) build
+	$(MAKE_CALL) clean_up
 	
 
-build::
-	$(CP) blankmake Makefile
-	FOR %%i IN ($(TST_OBJBUILDS))\
+build:: .\csv_files\*.csv
+	IF EXIST %|pfeF ( \
+	@echo %|pfeF %|fF \
+	)
+	IF EXIST %|pfeF ( \
+	$(PYTHON_CMD) %|pfeF\
+	)
+	IF EXIST %|pfeF ( \
+		$(MV) %|pfeF .\tex_files\%|feF \
+	) ELSE ( \
+		@echo build is finished \
+	)
+	IF EXIST %|pF\*.csv ( \
+		$(MAKE_CALL) build \
+		) ELSE ( \
+		$(MAKE_CALL) return_csv_files \
+	)
+
+
+return_csv_files: .\tex_files\*.csv
+	IF EXIST %|pfF.csv ( \
+		$(BUILD_TEX) $(BUILDER_OPTIONS) %|pfF.tex \
+	)
+	IF EXIST %|pfF.aux ( \
+		$(RM) %|pfF.aux \
+	)
+	IF EXIST %|pfF.log ( \
+		$(RM) %|pfF.log \
+	)
+	IF EXIST %|pfF.out ( \
+		$(RM) %|pfF.out \
+	)
+	IF EXIST %|pfF.csv ( \
+		$(MV) %|pfeF .\csv_files\%|feF \
+	)	
+	IF EXIST %|pF\*.csv ( \
+		$(MAKE_CALL) return_csv_files \
+		) ELSE ( \
+		@echo it is finished \
+	)
+	
+
+
+show: .\csv_files\*.csv
+	IF EXIST %|pF\*.csv ( \
+	@echo %|pfeF %|fF \
+	)
+	IF EXIST %|pF\*.csv ( \
+	$(PYTHON_CMD) %|pfeF\
+	)
+	IF EXIST %|pF\*.csv ( \
+		$(MV) %|pfeF .\tex_files\%|feF \
+	) ELSE ( \
+		@echo build is finished \
+	)
+	IF EXIST %|pF\*.csv ( \
+		$(MAKE_CALL) show \
+		) ELSE ( \
+		$(MAKE_CALL) show_csv_files \
+	)
+
+
+show_csv_files: .\tex_files\*.csv
+	IF EXIST %|pfF.csv ( \
+		$(BUILD_TEX) $(BUILDER_OPTIONS) %|pfF.tex \
+	)
+	IF EXIST %|pfF.aux ( \
+		$(RM) %|pfF.aux \
+	)	
+	IF EXIST %|pfF.log ( \
+		$(RM) %|pfF.log \
+	)	
+	IF EXIST %|pfF.out ( \
+		$(RM) %|pfF.out \
+	)	
+	IF EXIST %|pF\*.csv ( \
+		%|pfF.tex \
+	)	
+	IF EXIST %|pF\*.csv ( \
+		$(MV) %|pfeF .\csv_files\%|feF \
+	)	
+	IF EXIST %|pF\*.csv ( \
+		$(MAKE_CALL) show_csv_files \
+		) ELSE ( \
+		@echo it is finished \
+	)
+
+
+OPEN_PDF:
+	FOR %%i IN (.\tex_files\*.pdf) \
 		DO \
-		@echo( $$(CC) $$(CFLAGS) -c $$(TST_OBJ%%iSRC) -o $$(TST_OBJ%%i) >> Makefile
-	FOR %%i IN ($(OBJBUILDS))\
-		DO \
-		@echo( $$(CC) $$(CFLAGS) -c $$(OBJ%%iSRC) -o $$(OBJ%%i) >> Makefile
-
-pdf:
-	$(BUILD_TEX) $(BUILDER_OPTIONS) $(TEX_FILENAME) 
-	$(MAKE_CALL) clean_up
-
-show: 
-	$(BUILD_TEX) $(BUILDER_OPTIONS) $(TEX_FILENAME) 
-	$(MAKE_CALL) clean_up
-	$(PDF_FILE)
-
-run:
-	($(FILE_EXE))
-
-clean:
-	$(RM) $(APPS)
-	$(RMDIR) $(BINPATH) $(TEST_BINPATH)
-
-clean_up:
-	$(RM) $(AUX_FILES)
-#	$(RM) $(FILEBIN) $(OBJECTS) $(TST_OBJECTS)
-#	$(RMDIR) $(OBJPATH) $(TEST_OBJPATH)
-
-clean_all:
-	$(MAKE_CALL) clean_up
-	$(MAKE_CALL) clean
+		%i
 
 BUILD_DIR:
-	mkdir $(BINPATH)
-	mkdir $(OBJPATH)
-	mkdir $(TEST_BINPATH)
-	mkdir $(TEST_OBJPATH)
+	IF EXIST .\tex_files\* ( \
+		@echo no directory required \
+	) ELSE ( \
+		mkdir .\tex_files \
+	)
 	
 BUILD_OBJ:
 	@echo building...
 #####	VARIABLE BUILD	#####
- $(CC) $(CFLAGS) -c $(OBJ1SRC) -o $(OBJ1) 
- $(CC) $(CFLAGS) -c $(OBJ2SRC) -o $(OBJ2) 
- $(CC) $(CFLAGS) -c $(OBJ3SRC) -o $(OBJ3) 
- $(CC) $(CFLAGS) -c $(OBJ4SRC) -o $(OBJ4) 
- $(CC) $(CFLAGS) -c $(OBJ5SRC) -o $(OBJ5) 
- $(CC) $(CFLAGS) -c $(OBJ6SRC) -o $(OBJ6) 
- $(CC) $(CFLAGS) -c $(OBJ7SRC) -o $(OBJ7) 
- $(CC) $(CFLAGS) -c $(OBJ8SRC) -o $(OBJ8) 
+
