@@ -6,5 +6,6 @@ recommended in the .csv files
 
 1. Create CSV checklist generation files in the .\csv_files directory
 2. Run the appropriate command from you CLI (Command Line Interface)
-   a. "nmake" → Creates a pdf of each .csv file in .\csv_files
-   b. "nmake render" → creates and opens each pdf in the .\tex_files
+   a. "nmake" → Creates a pdf of each .csv file in .\csv_files directory
+   b. "nmake show" → Creates and opens each pdf in the .\tex_files directory
+   c. "nmake open" → Opens all pdf checklists in the .\tex_files directory

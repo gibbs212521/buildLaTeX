@@ -152,7 +152,7 @@ show_csv_files: .\tex_files\*.csv
 	)
 
 
-OPEN_PDF:
+open:
 	FOR %%i IN (.\tex_files\*.pdf) \
 		DO \
 		%i
