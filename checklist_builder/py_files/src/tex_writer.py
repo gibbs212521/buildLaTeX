@@ -115,7 +115,7 @@ def LaTeXize_contents(contents):
                 contents = contents[:count] + '$' + contents[count:count+1] \
                     + '$' + contents[count+1:]
                 break
-            if (character == "&" or character == "%")\
+            if (character == "&" or character == "%" or character == "#")\
                 and contents[count-1] is not "\\"\
                 and contents[count-1] is not "|":#\
                 # and contents[count+1] is not "_" \
@@ -218,6 +218,7 @@ def build_table(dictionary_object):
             dimension = str(dimensions[indx])
             dimension += 'pt'
             while dimension[0] == ' ': dimension = dimension[1:]
+            if not len(dimension): dimension = ' '
             item_text = '\\parbox{'+ f'{dimension}' + '}'+\
                 '{\\hfill\\\\[-0.3em] \\centering '
                 #Inverter} \\\\')
@@ -240,6 +241,7 @@ def build_table(dictionary_object):
                             item_text += ' \\\\ '
                             line_text = line_text[super_indx-novo_indx:]
                             break
+                    print(f'Please see in range {range_num} with range of {len(line_text)}')
                 item_text += line_text + ' \\\\[0.1em]}'
             if indx == (len(dimensions) - 1): item_text += ' \\\\%'
             else: item_text += ' &%'
